@@ -1,0 +1,185 @@
+#:import ScrollEffect  kivy.effects.scroll.ScrollEffect
+<Cell@KXReorderableBehavior+BoxLayout>:
+	id: line
+	spacing: 10
+    drag_classes: ['gate', ]
+    size_hint_y: None
+    size_hint_x: None
+    height: 50
+    width: sum(x.width for x in self.children)+150
+    canvas:
+    	Color:
+    		rgba: (1,1,1,1)
+    	Line:
+    		points: (50, int(self.y)+25, self.width, int(self.y)+25)
+    		width: 1
+    #viewclass: 'Gate'
+
+<Gate>:
+    drag_cls: 'gate'
+    drag_timeout: 0
+    font_size: 10
+    size_hint: None, None
+    opacity: .3 if self.is_being_dragged else 1.
+    canvas.after:
+        Color:
+            rgba: 1, 1, 1, 1
+        Line:
+            rectangle: [*self.pos, *self.size, ]
+
+<Deck>:
+    canvas.after:
+        Color:
+            rgba: 1, 1, 1, 1
+        Line:
+            rectangle: [*self.pos, *self.size, ]
+
+<ScrollCircuitX>:
+	do_scroll_y: False
+	do_scroll_x: True
+	bar_width: 10
+	bar_color: (1,1,1,1)
+	always_overscroll: False
+	effect_cls: ScrollEffect
+	scroll_type: ['bars', 'content']
+
+<ScrollCircuitY>:
+	size_hint_y: None
+	height: 250
+	do_scroll_y: True
+	do_scroll_x: False
+	bar_width: 10
+	bar_color: (1,1,1,1)
+	always_overscroll: False
+	effect_cls: ScrollEffect
+	bar_pos_y: 'left'
+	scroll_type: ['bars']
+
+<RootWidget>:
+	circuit_layout: circuit_layout
+	line1:line1
+	orientation: 'vertical'
+	canvas:
+		Color:
+			rgba: (1,1,1,1)
+		Line:
+			points: (0, int(self.height-30), int(self.width), int(self.height-30))
+			width: 1
+		Line:
+			points: (0, int(self.height-60), int(self.width), int(self.height-60))
+			width: 1
+		Line:
+			points: (200, int(self.height-310), int(self.width), int(self.height-310))
+			width: 1
+	BoxLayout:
+		orientation: 'horizontal'
+		size_hint_y: None
+		size_hint_x: None
+		pos_hint: {'left': 1}
+		height: 30
+		width: 260
+		Button:
+			text: 'File'
+			font_size: 20
+			background_color: (0.7,0.7,0.7,1)
+		Button:
+			text: 'View'
+			font_size: 20
+			background_color: (0.7,0.7,0.7,1)
+		Button:
+			text: 'Tools'
+			font_size: 20
+			background_color: (0.7,0.7,0.7,1)
+		Button:
+			text: 'Help'
+			font_size: 20
+			background_color: (0.7,0.7,0.7,1)
+
+	BoxLayout:
+		orientation: 'horizontal'
+		size_hint_y: None
+		size_hint_x: None
+		pos_hint: {'left': 1}
+		height: 30
+		width: 500
+		Button:
+			text: '1'
+			background_color: (0.7,0.7,0.7,1)
+		Button:
+			text: '2'
+			background_color: (0.7,0.7,0.7,1)
+		Button:
+			text: '3'
+			background_color: (0.7,0.7,0.7,1)
+		Button:
+			text: '4'
+			background_color: (0.7,0.7,0.7,1)
+		Button:
+			text: '5'
+			background_color: (0.7,0.7,0.7,1)
+		Button:
+			text: '6'
+			background_color: (0.7,0.7,0.7,1)
+		Button:
+			text: '7'
+			background_color: (0.7,0.7,0.7,1)
+		Button:
+			text: '8'
+			background_color: (0.7,0.7,0.7,1)
+		Button:
+			text: '9'
+			background_color: (0.7,0.7,0.7,1)
+
+	EquitableBoxLayout:
+		BoxLayout:
+			orientation: 'vertical'
+			size_hint_x: None
+			width: 200
+			Button:
+				id: addline
+				text: "Add Circuit Line"
+				on_press: root.buttonClicked()
+				canvas.after:
+					Color:
+						rgba: (1,1,1,1)
+					Line:
+						rectangle: (self.x, self.y, self.width, self.height)
+			RelativeLayout:
+				Deck:
+					text: 'NOT'
+					font_size: '10'
+			Deck:
+            	text: 'CNOT'
+            	font_size: '10'
+            Deck:
+            	text: 'Toffoli'
+            	font_size: '10'
+            Deck:
+            	text: 'Swap'
+            	font_size: '10'
+            Deck:
+            	text: 'Identity'
+            	font_size: '10'
+		BoxLayout:
+			orientation: 'vertical'
+			ScrollCircuitY:
+				ScrollCircuitX:
+					size_hint_y: None
+					height: root.circuit_layout.height
+					BoxLayout:
+						id: circuit_layout
+						size_hint_y: None
+						size_hint_x: None
+						height: sum(x.height for x in self.children)+sum(12 for x in self.children)
+						width: root.line1.width
+						padding: 10
+						spacing: 10
+						orientation: 'vertical'
+						Cell:
+							id:line1
+						Cell:
+						Cell:
+						Cell:
+			BoxLayout:
+				Label:
+					text: 'teste'
