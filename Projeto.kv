@@ -68,7 +68,6 @@
 
 <RootWidget>:
 	circuit_layout: circuit_layout
-	line1:line1
 	orientation: 'vertical'
 	canvas:
 		Color:
@@ -182,15 +181,11 @@
 						size_hint_y: None
 						size_hint_x: None
 						height: sum(x.height for x in self.children)+sum(12 for x in self.children)
-						width: root.line1.width
+						width: max([x.width for x in self.children], default=0)
 						padding: 10
 						spacing: 10
 						orientation: 'vertical'
-						Cell:
-							id:line1
-						Cell:
-						Cell:
-						Cell:
+
 			BoxLayout:
 				Label:
 					text: 'teste'
