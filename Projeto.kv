@@ -1,21 +1,4 @@
 #:import ScrollEffect  kivy.effects.scroll.ScrollEffect
-<<<<<<< Updated upstream
-<Cell@KXReorderableBehavior+BoxLayout>:
-	id: line
-	spacing: 10
-    drag_classes: ['gate', ]
-    size_hint_y: None
-    size_hint_x: None
-    height: 50
-    width: max(50 + sum(x.width + self.spacing for x in self.children) + 30, 150)
-    canvas:
-    	Color:
-    		rgba: (1,1,1,1)
-    	Line:
-    		points: (50, int(self.y)+25, self.width, int(self.y)+25)
-    		width: 1
-    #viewclass: 'Gate'
-=======
 <ReorderableBoxLayout@KXReorderableBehavior+BoxLayout>:
 <Cell@BoxLayout>:
 	number_line: number_line
@@ -23,7 +6,6 @@
 	size_hint_y: None
 	height: 50
 	size_hint_x: None
-	width: sum(x.width for x in self.children)
 	Label:
 		id: number_line
 		size_hint: None, None
@@ -35,6 +17,7 @@
     	size_hint_y: None
     	size_hint_x: None
     	height: 50
+		width: max(30 + sum(x.width + self.spacing for x in self.children), 150)
     	canvas:
     		Color:
     			rgba: (1,1,1,1)
@@ -42,7 +25,6 @@
     			points: (50, int(self.y)+25, self.width, int(self.y)+25)
     			width: 1
     	#viewclass: 'Gate'
->>>>>>> Stashed changes
 
 <Gate>:
     drag_cls: 'gate'
@@ -86,6 +68,7 @@
 
 <RootWidget>:
 	circuit_layout: circuit_layout
+	line1:line1
 	orientation: 'vertical'
 	canvas:
 		Color:
@@ -199,14 +182,15 @@
 						size_hint_y: None
 						size_hint_x: None
 						height: sum(x.height for x in self.children)+sum(12 for x in self.children)
-<<<<<<< Updated upstream
 						width: root.line1.width
-						padding: 70
-=======
 						padding: 10
->>>>>>> Stashed changes
 						spacing: 10
 						orientation: 'vertical'
+						Cell:
+							id:line1
+						Cell:
+						Cell:
+						Cell:
 			BoxLayout:
 				Label:
 					text: 'teste'
