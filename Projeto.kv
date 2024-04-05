@@ -6,7 +6,7 @@
     size_hint_y: None
     size_hint_x: None
     height: 50
-    width: sum(x.width for x in self.children)+150
+    width: max(50 + sum(x.width + self.spacing for x in self.children) + 30, 150)
     canvas:
     	Color:
     		rgba: (1,1,1,1)
@@ -145,9 +145,9 @@
 					Line:
 						rectangle: (self.x, self.y, self.width, self.height)
 			RelativeLayout:
-				Deck:
-					text: 'NOT'
-					font_size: '10'
+			Deck:
+				text: 'NOT'
+				font_size: '10'
 			Deck:
             	text: 'CNOT'
             	font_size: '10'
@@ -172,7 +172,7 @@
 						size_hint_x: None
 						height: sum(x.height for x in self.children)+sum(12 for x in self.children)
 						width: root.line1.width
-						padding: 10
+						padding: 70
 						spacing: 10
 						orientation: 'vertical'
 						Cell:

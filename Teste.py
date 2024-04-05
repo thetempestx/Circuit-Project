@@ -13,6 +13,8 @@ from typing import Tuple, Iterable
 from kivy.clock import Clock
 
 from kivy_garden.draggable import KXDraggableBehavior, KXReorderableBehavior
+from kivy.config import Config
+Config.set('input', 'mouse', 'mouse,disable_multitouch')
 
 class Cell(KXReorderableBehavior, BoxLayout):
 	pass
