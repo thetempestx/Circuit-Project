@@ -17,10 +17,24 @@ from kivy.config import Config
 Config.set('input', 'mouse', 'mouse,disable_multitouch')
 
 class Cell(KXReorderableBehavior, BoxLayout):
-	pass
+    pass
 
 class Gate(KXDraggableBehavior, Label):
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    def on_drag_succeed(self, touch, ctx):
+        original_state = ctx.original_state
+        self.parent.remove_widget(self)
+        self.size_hint_x = original_state['size_hint_x']
+        self.size_hint_y = original_state['size_hint_y']
+        self.pos_hint = original_state['pos_hint']
+        ctx.droppable.add_widget(self, index=touch.ud.get('kivyx_droppable_index', 0))
+        ctx.droppable.width += 50
+        circuit_lengh = max([x.ids.line.width for x in RootWidget().ids.circuit_layout.children])
+        for cell in RootWidget().ids.circuit_layout.children:
+            cell.ids.line.width = circuit_lengh
+        circuit_lengh = max([x.ids.line.width for x in RootWidget().ids.circuit_layout.children])
+        #RootWidget().ids.circuit_layout.width = circuit_lengh
 
 class Deck(Label):
     board = ObjectProperty()
@@ -43,11 +57,21 @@ class ScrollCircuitY(ScrollView):
 		super().on_scroll_stop(touch, check_children=False)
 
 class RootWidget(BoxLayout):
-	def __init__(self, **kwargs):
-		super(RootWidget, self).__init__(**kwargs)
-		self.count = 1
-	def buttonClicked(self):
-		self.ids.circuit_layout.add_widget(Cell())
+    def __init__(self, **kwargs):
+        super(RootWidget, self).__init__(**kwargs)
+        self.count = 5
+        for i in range(1,5):
+            line = Cell()
+            line.ids.number_line.text = "x"+str(i)
+            line.width = 50
+            self.ids.circuit_layout.add_widget(line)
+    
+    def buttonClicked(self):
+        newline = Cell()
+        newline.ids.number_line.text = "x"+str(self.count)
+        newline.width = 50
+        self.ids.circuit_layout.add_widget(newline)
+        self.count += 1
 
 class EquitableBoxLayout(F.BoxLayout):
     def on_touch_down(self, touch):
